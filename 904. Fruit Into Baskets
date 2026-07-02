@@ -1,0 +1,35 @@
+SOLUTION 1: 
+TC: O(2n)
+SC: O(3)
+
+class Solution {
+    public int totalFruit(int[] fruits) {
+        int l = 0; int r = 0; int maxlen = 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        while(r < fruits.length){
+
+            map.compute(fruits[r], (k,v)-> (v == null) ? 1 : v+1 );
+
+            if(map.size() > 2){
+                while(map.size() > 2){
+                    map.compute(fruits[l], (k,v) -> (v == null || v <= 1) ? null : v-1);
+
+                    if(map.get(fruits[l]) == null){
+                        map.remove(fruits[l]);
+                    }
+
+                    l++;
+                }
+            }
+
+            if(map.size() <=2){
+                maxlen = Math.max(maxlen, r-l+1);
+            }
+
+            r++;
+        }
+
+        return maxlen;
+    }
+}
