@@ -1,0 +1,107 @@
+SOLUTION 1: 
+TC : O(n²)
+
+class Solution {
+    public int kDistinctChar(String s, int k) {
+        int maxlen = 0;
+        HashMap<Character, Integer> map = new HashMap<>();
+
+        for(int i=0; i<s.length(); i++){
+            map.clear();
+
+            for(int j=i; j<s.length(); j++){
+                map.compute(s.charAt(j), (key,v) -> (v == null) ? v = 1 : v+1);
+
+                if(map.size() <= k){
+                    maxlen = Math.max(maxlen, j-i+1);
+                } 
+                else{
+                    break;
+                }
+            }
+        }
+
+        return maxlen;
+    }
+}
+
+SOLUTION 2: 
+TC : O(2n)
+
+class Solution {
+    public int kDistinctChar(String s, int k) {
+        int maxlen = 0;
+        int l = 0; int r = 0;
+
+        HashMap<Character, Integer> map = new HashMap<>();
+
+        while(r < s.length()){
+ 
+            map.compute(s.charAt(r), (key, v) -> (v == null) ? 1 : v+1);
+
+            if(map.size() > k){
+                
+                while(map.size() > k){
+                    map.compute(s.charAt(l), (key, v) -> (v <= 1 || v == null) ? null : v-1);
+
+                    if(map.get(s.charAt(l)) == null){
+                        map.remove(s.charAt(l));
+                    }
+
+                    l++;
+                }
+            }
+
+            if(map.size() <= k){
+                maxlen = Math.max(maxlen, r-l+1);
+            }
+           
+           r++;
+
+        }
+
+
+        return maxlen;
+    }
+}
+
+
+SOLUTION 3:
+TC : O(n)
+
+class Solution {
+    public int kDistinctChar(String s, int k) {
+        int maxlen = 0;
+        int l = 0; int r = 0;
+
+        HashMap<Character, Integer> map = new HashMap<>();
+
+        while(r < s.length()){
+ 
+            map.compute(s.charAt(r), (key, v) -> (v == null) ? 1 : v+1);
+
+            if(map.size() > k){
+                
+                if(map.size() > k){
+                    map.compute(s.charAt(l), (key, v) -> (v <= 1 || v == null) ? null : v-1);
+
+                    if(map.get(s.charAt(l)) == null){
+                        map.remove(s.charAt(l));
+                    }
+
+                    l++;
+                }
+            }
+
+            if(map.size() <= k){
+                maxlen = Math.max(maxlen, r-l+1);
+            }
+           
+           r++;
+
+        }
+
+
+        return maxlen;
+    }
+}
