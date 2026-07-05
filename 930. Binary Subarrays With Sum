@@ -2,6 +2,7 @@ SOLUTION 1:
 TC : O(2 * 2N)
 SC : O(1)
 
+
 class Solution {
     public int numSubarraysWithSum(int[] nums, int goal) {
         return func(nums, goal) - func(nums, goal-1);
