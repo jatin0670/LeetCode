@@ -1,0 +1,48 @@
+SOLUTION 1:
+TC : O(n)
+SC : O(1)
+
+class Solution {
+    public int lengthOfLoop(Node head) {
+        // code here
+        Node slow = head,
+            fast = head;
+            
+        
+        while(fast != null && fast.next != null){
+           slow = slow.next;
+           fast = fast.next.next;
+           
+           if(fast == slow){
+               break;
+           }
+        }
+        
+        if(fast == null || fast.next == null){
+            return 0;
+        }
+        
+        
+        Node n1 = head;
+        Node n2 = slow;
+        
+        while(n1 != n2){
+            n1 = n1.next;
+            n2 = n2.next;
+        }
+        
+        int len = 1;
+        
+        Node curr = n1.next;
+        
+        while(n1 != curr){
+            len++;
+            curr = curr.next;
+        }
+        
+        return len;
+        
+        
+        
+    }
+}
