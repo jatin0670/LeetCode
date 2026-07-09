@@ -1,0 +1,52 @@
+SOLUTION 1: Using HashSet Data Structure
+TC : O(n)
+SC : O(n)
+
+class Solution {
+    public int findDuplicate(int[] nums) {
+        HashSet<Integer> hash = new HashSet<>();
+
+        for(int i =0; i<nums.length; i++){
+            if(hash.contains(nums[i])){
+                 return nums[i];
+            }
+
+            hash.add(nums[i]);
+        }
+
+        return -1;
+    }
+}
+
+
+SOLUTION 2: Using Slow and Fast pointers
+TC : O(n)
+SC : O(1)
+
+class Solution {
+    public int findDuplicate(int[] nums) {
+        int slow = 0,
+            fast = 0;
+
+        do{
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+
+            if(slow == fast){
+                break;
+            }
+
+        }while(slow != fast);
+
+
+        int n1 = 0;
+        int n2 = slow;
+
+        while(n1 != n2){
+            n1 = nums[n1];
+            n2 = nums[n2];
+        }
+
+        return n1;
+    }
+}
