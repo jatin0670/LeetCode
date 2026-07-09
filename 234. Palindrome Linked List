@@ -1,0 +1,71 @@
+SOLUTION 1: Using ArrayList
+TC : O(N)
+SC : O(N)
+
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        List<Integer> list = new ArrayList<>();
+
+        while(head != null){
+            list.add(head.val);
+            head = head.next;
+        }
+
+        int i = 0;
+        int j = list.size() - 1;
+
+        while(i < j){
+            if(list.get(i) != list.get(j)){
+                return false;
+            }
+
+            i++;
+            j--;
+        }
+
+        return true;
+    }
+}
+
+
+SOLUTION 2: Using Slow and Fast pointers
+TC : O(n)
+SC : O(1)
+
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        ListNode p1 = head;
+        ListNode p2 = reverse(slow);
+
+        while(p1 != null && p2 != null){
+            if(p1.val != p2.val){
+                return false;
+            }
+            p1 = p1.next;
+            p2 = p2.next;
+        }
+
+        return true;
+    }
+
+    public ListNode reverse(ListNode curr){
+          ListNode prev = null;
+
+          while(curr != null){
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+          }
+
+          return prev;
+    }
+}
