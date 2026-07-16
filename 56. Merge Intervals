@@ -57,3 +57,41 @@ class Solution {
 
     }
 }
+
+
+
+SOLUTION 2:
+TC : O(n logn)
+SC : O(n)
+
+
+class Solution {
+    public int[][] merge(int[][] intervals) {
+        List<int[]> list = new ArrayList<>();
+
+        Arrays.sort(intervals, (a, b)-> Integer.compare(a[0], b[0]));
+
+        list.add(intervals[0]);
+
+        for(int i =1; i<intervals.length; i++){
+            int[] prev = list.get(list.size()-1);
+            int[] curr = intervals[i];
+
+            if(curr[0] <= prev[1]){
+                //  prev[0] = Math.min(curr[0], prev[0]);   WE DONT NEED TO ADD THIS BECAUSE PREV[0] IS ALREADY SMALLEST NUMBER
+                 prev[1] = Math.max(curr[1], prev[1]);
+            }
+            else{
+                list.add(intervals[i]);
+            }
+        }
+
+        int[][] ans = new int[list.size()][2];
+
+        for(int i =0; i <list.size(); i++){
+            ans[i] = list.get(i);
+        }
+
+        return ans;
+    }
+}
