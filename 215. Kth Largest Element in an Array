@@ -1,0 +1,35 @@
+SOLUTION 1:
+TC : O(n logn)   because it uses quick sort alog
+SC : O(logn)
+
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        Arrays.sort(nums);
+
+        return nums[nums.length-k];
+    }
+}
+
+
+SOLUITON 2:
+SC : O(n logk)
+TC : O(k)
+
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+
+        for(int i=0; i<k; i++){
+            minHeap.add(nums[i]);
+        }
+
+        for(int j=k; j<nums.length; j++){
+            if(nums[j] > minHeap.peek()){
+                minHeap.remove();
+                minHeap.add(nums[j]);
+            }
+        }
+
+        return minHeap.peek();
+    }
+}
