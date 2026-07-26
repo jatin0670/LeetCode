@@ -1,0 +1,117 @@
+SOLUTION 1:
+TC : O(m.n + m^2 (log(n+m))
+SC : O(n + m)
+
+class KthLargest {
+    List<Integer> list;
+    int kth;
+
+    public KthLargest(int k, int[] nums) {
+        list = new ArrayList<>();
+        kth = k;
+
+        for(int num : nums){
+            list.add(num);
+        }
+
+        
+    }
+    
+    public int add(int val) {
+
+        list.add(val);
+        Collections.sort(list);
+        
+        return list.get(list.size()-kth);
+        
+    }
+}
+
+
+SOLUTION 2:
+TC : 
+SC :
+
+class KthLargest {
+
+    PriorityQueue<Integer> minHeap;
+    int kth;
+    public KthLargest(int k, int[] nums) {
+        kth = k;
+        minHeap = new PriorityQueue<Integer>();
+
+        for(int i=0; i<Math.min(nums.length, k); i++){
+            minHeap.add(nums[i]);
+        }
+
+        for(int j=k; j<nums.length; j++){
+            if(nums[j] > minHeap.peek()){
+                minHeap.add(nums[j]);
+                minHeap.remove();
+            }
+        }
+        
+    }
+    
+    public int add(int val) {
+
+        if(minHeap.isEmpty()){
+            minHeap.add(val);
+            return minHeap.peek();
+        }
+
+        if(minHeap.size() < kth){
+            minHeap.add(val);
+            return minHeap.peek();
+        }
+
+        if(val > minHeap.peek()){
+            minHeap.add(val);
+            minHeap.remove();
+        }
+
+        return minHeap.peek();
+        
+    }
+}
+
+
+SOLUTION 3:
+TC :
+SC :
+
+class KthLargest {
+
+    PriorityQueue<Integer> minHeap;
+    int kth;
+    public KthLargest(int k, int[] nums) {
+        kth = k;
+        minHeap = new PriorityQueue<Integer>();
+
+        for(int i=0; i<nums.length; i++){
+            add(nums[i]);    //THIS IS THE BELOW FUNCTION 
+        }
+        
+    }
+    
+    public int add(int val) {
+
+        if(minHeap.isEmpty()){
+            minHeap.add(val);
+            return minHeap.peek();
+        }
+
+        if(minHeap.size() < kth){
+            minHeap.add(val);
+            return minHeap.peek();
+        }
+
+        if(val > minHeap.peek()){
+            minHeap.add(val);
+            minHeap.remove();
+        }
+
+        return minHeap.peek();
+        
+    }
+}
