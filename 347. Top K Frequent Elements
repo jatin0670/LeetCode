@@ -1,0 +1,123 @@
+SOLUTION 1:
+TC : O(n logn)
+SC : O(n)
+
+class EleCounter{
+    int val;
+    int freq;
+
+
+    EleCounter(int v, int f){
+        val = v;
+        freq = f;
+    }
+}
+
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for(int i = 0; i<nums.length; i++){
+            if(map.containsKey(nums[i])){
+                map.put(nums[i], map.get(nums[i]) + 1);
+            }
+            else{
+                map.put(nums[i], 1);
+            }
+        }
+
+
+        List<EleCounter> list = new ArrayList<>();
+
+        for(Map.Entry<Integer, Integer> entry : map.entrySet()){
+            list.add(new EleCounter(
+                entry.getKey(),
+                entry.getValue()
+            ));
+        }
+
+        Collections.sort(list, (a,b)-> b.freq - a.freq);
+
+        int[] res = new int[k];
+
+        for(int i =0; i<k; i++){
+            res[i] = list.get(i).val;
+        }
+
+        return res;
+        
+    }
+
+
+SOLUTION 2:
+TC : O(n logk)
+SC : O(n)
+
+class EleCounter{
+    int val;
+    int freq;
+
+
+    EleCounter(int v, int f){
+        val = v;
+        freq = f;
+    }
+}
+
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        for(int i = 0; i<nums.length; i++){
+            if(map.containsKey(nums[i])){
+                map.put(nums[i], map.get(nums[i]) + 1);
+            }
+            else{
+                map.put(nums[i], 1);
+            }
+        }
+
+
+        PriorityQueue<EleCounter> minHeap = new PriorityQueue<>((a,b) -> a.freq - b.freq);
+
+        for(Map.Entry<Integer, Integer> entry : map.entrySet()){
+            
+            if(minHeap.isEmpty() || minHeap.size() < k){
+                minHeap.add(new EleCounter(
+                entry.getKey(),
+                entry.getValue()
+            ));
+      
+              continue;
+            }
+
+            int f = entry.getValue();
+
+            if(f > minHeap.peek().freq){
+                minHeap.remove();
+                minHeap.add(new EleCounter(
+                entry.getKey(),
+                entry.getValue()
+            ));
+        }
+        }
+
+        
+
+        int[] res = new int[k];
+
+       int i = 0;
+
+       while(i < k){
+            EleCounter ele = minHeap.poll();
+           res[i] = ele.val;
+           i++;
+       }
+
+        return res;
+        
+    }
+}
+}
