@@ -1,5 +1,3 @@
-## Two Sum
-___
 SOLUTIONS 1:
 TC : O(n^2)
 SC : O(1)
