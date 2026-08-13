@@ -1,0 +1,36 @@
+SOLUITON 1: TIME LIMIT EXCEEDED
+TC : O(n^2)
+SC : O(n)
+
+class Solution {
+    public long maximumSubarraySum(int[] nums, int k) {
+        
+        long sum = 0;
+        long max = 0;
+
+        for(int i=0; i<=nums.length-k; i++){
+            boolean isdup = false;
+            Set<Integer> set = new HashSet<>();
+
+            sum = 0;
+            for(int j = i; j<=i+k-1; j++){
+                if(set.contains(nums[j])){
+                    isdup = true;
+                    break;
+                }
+
+                set.add(nums[j]);
+
+                sum+= nums[j];
+            }
+
+            if(!isdup){
+                max = Math.max(max, sum);
+            }
+
+        }
+
+        return max;
+        
+    }
+}
