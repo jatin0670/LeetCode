@@ -30,6 +30,77 @@ class Solution {
 
         }
 
+
+
+SOLUTION 2:
+TC : O(n)
+SC : O(n)
+
+class Solution {
+    public long maximumSubarraySum(int[] nums, int k) {
+        long max =0;
+        long sum =0;
+
+        Map<Integer, Integer> map = new HashMap<>();
+
+        int dup = 0;
+
+        for(int i=0; i<k; i++){
+            if(!map.containsKey(nums[i])){
+                map.put(nums[i], 0);
+            }
+
+            map.put(nums[i], map.getOrDefault(nums[i], 0) + 1);
+
+            sum+= nums[i];
+
+            if(map.get(nums[i]) > 1){
+                dup++;
+            }
+        }
+
+        if(dup == 0){
+            max = Math.max(max, sum);
+        }
+
+
+        for(int i = k; i<nums.length; i++){
+            int numsToAdd = nums[i];
+            int numsToRemove = nums[i-k];
+
+            if(!map.containsKey(numsToAdd)){
+                map.put(numsToAdd, 0);
+            }
+
+            map.put(numsToAdd, map.getOrDefault(numsToAdd, 0) + 1);
+
+            if(map.get(numsToAdd) > 1){
+                dup++;
+            }
+
+            sum+=numsToAdd;
+
+            if(map.get(numsToRemove) > 1){
+                dup-= 1;
+            }
+
+            map.put(numsToRemove, map.get(numsToRemove) -1);
+
+
+            sum-=numsToRemove;
+
+            if(dup == 0){
+                max = Math.max(max, sum);
+            }
+
+
+        }
+
+        return max;
+    }
+}
+
+
         return max;
         
     }
