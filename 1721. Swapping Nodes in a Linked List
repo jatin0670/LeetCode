@@ -1,0 +1,76 @@
+SOLUTION 1:
+TC : O(n)
+SC : O(1)
+
+class Solution {
+    public ListNode swapNodes(ListNode head, int k) {
+        int jump1 = k-1;
+        
+        int len = 0;
+
+        ListNode curr = head;
+
+        while(curr != null){
+            curr = curr.next;
+            len++;
+        }
+
+        ListNode l1 = head;
+        int counter = 0;
+
+        while(counter < jump1){
+            l1 = l1.next;
+            counter++;
+        }
+
+        int jump2 = len-k;
+        counter = 0;
+        ListNode l2 = head;
+
+        while(counter < jump2){
+            l2 = l2.next;
+            counter++;
+        }
+
+
+        int temp  = l1.val;
+        l1.val = l2.val;
+        l2.val = temp;
+
+
+        return head;
+
+    }
+}
+
+
+SOLUTION 2:
+TC : O(n)
+SC : O(1)
+
+class Solution {
+    public ListNode swapNodes(ListNode head, int k) {
+        int startJump = 0;
+
+        ListNode n1 = head;
+
+        while (startJump < k - 1) {
+            n1 = n1.next;
+            startJump++;
+        }
+
+        ListNode n1T = n1;
+        ListNode n2 = head;
+
+        while (n1T.next != null) {
+            n1T = n1T.next;
+            n2 = n2.next;
+        }
+
+        int temp = n1.val;
+        n1.val = n2.val;
+        n2.val = temp;
+
+        return head;
+    }
+}
