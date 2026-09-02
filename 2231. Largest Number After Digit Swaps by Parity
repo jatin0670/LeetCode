@@ -1,0 +1,68 @@
+SOLUTION 1: 
+TC : O(n2)
+SC : O(n)
+
+class Solution {
+    public int largestInteger(int num) {
+        char[] nums = Integer.toString(num).toCharArray();
+
+        for (int i = 0; i < nums.length; i++) {
+
+            int maxPos = i;
+
+            for (int j = i + 1; j < nums.length; j++) {
+
+                if (nums[j] > nums[maxPos] && (nums[i] - nums[j]) % 2 == 0) {
+                    maxPos = j;
+                }
+            }
+
+            char temp = nums[i];
+            nums[i] = nums[maxPos];
+            nums[maxPos] = temp;
+
+        }
+
+        return Integer.parseInt(new String(nums));
+    }
+
+
+
+SOLUTION 2:
+TC : O(n logn)
+SC : O(n)
+
+class Solution {
+    public int largestInteger(int num) {
+        PriorityQueue<Integer> even = new PriorityQueue<>(Collections.reverseOrder());
+        PriorityQueue<Integer> odd = new PriorityQueue<>(Collections.reverseOrder());
+
+        String s = Integer.toString(num);
+
+        for (char c : s.toCharArray()) {
+            int val = c - '0';
+
+            if (val % 2 == 0) {
+                even.add(val);
+            } else {
+                odd.add(val);
+            }
+        }
+
+        StringBuilder sb = new StringBuilder();
+
+        for (char c : s.toCharArray()) {
+            int val = c - '0';
+
+            if (val % 2 == 0) {
+                sb.append(even.poll());
+            } else {
+                sb.append(odd.poll());
+            }
+        }
+
+        return Integer.parseInt(sb.toString());
+    }
+}
+
+}
