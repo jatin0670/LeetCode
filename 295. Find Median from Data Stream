@@ -1,0 +1,77 @@
+SOLUTION 1: TLE
+TC : O(n*m logm)
+SC : O(n logm)
+
+class MedianFinder {
+    List<Integer> list;
+
+    public MedianFinder() {
+        list = new ArrayList<>();
+    }
+
+    public void addNum(int num) {
+        list.add(num);
+    }
+
+    public double findMedian() {
+        Collections.sort(list);
+        int n = list.size();
+
+        if (n % 2 == 0) {
+            return (list.get(n / 2) + list.get(n / 2 - 1)) / 2.0;
+        } else {
+            return list.get(n / 2);
+        }
+    }
+}
+
+
+SOLUTION 2: for m calls 
+TC : O(m logm)
+SC : O(m)
+
+
+class MedianFinder {
+    PriorityQueue<Integer> minHeap;
+    PriorityQueue<Integer> maxHeap;
+
+    public MedianFinder() {
+
+        minHeap = new PriorityQueue<>();
+        maxHeap = new PriorityQueue<>(Collections.reverseOrder());
+
+    }
+
+    public void addNum(int num) {
+
+        if (maxHeap.size() == 0) {
+            maxHeap.add(num);
+            return;
+        }
+
+        if (minHeap.size() == maxHeap.size()) {
+            if (num > maxHeap.peek()) {
+                minHeap.add(num);
+
+                maxHeap.add(minHeap.poll());
+            } else {
+                maxHeap.add(num);
+            }
+        } else {
+            maxHeap.add(num);
+
+            minHeap.add(maxHeap.poll());
+        }
+
+    }
+
+    public double findMedian() {
+
+        if (minHeap.size() == maxHeap.size()) {
+            return (minHeap.peek() + maxHeap.peek()) / 2.0;
+        } else {
+            return maxHeap.peek();
+        }
+
+    }
+}
