@@ -1,0 +1,64 @@
+SILUTION 1: 
+TC : O(log n)
+SC : O(1)
+
+class Solution {
+
+    public int firstOcuur(int[] nums, int target) {
+        int low = 0;
+        int high = nums.length - 1;
+
+        int ans = -1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (target == nums[mid]) {
+                ans = mid;
+                high = mid - 1;
+            } else if (target > nums[mid]) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+
+        return ans;
+    }
+
+    public int lastOccur(int[] nums, int target) {
+        int low = 0;
+        int high = nums.length - 1;
+
+        int ans = -1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (target == nums[mid]) {
+                ans = mid;
+                low = mid + 1;
+            } else if (target > nums[mid]) {
+                low = mid + 1;
+            } else {
+                high = mid - 1;
+            }
+        }
+
+        return ans;
+    }
+
+    public int[] searchRange(int[] nums, int target) {
+        int firstIndex = firstOcuur(nums, target);
+
+        if (firstIndex == -1) {
+            return new int[] {
+                    -1, -1
+            };
+        }
+
+        int lastIndex = lastOccur(nums, target);
+
+        return new int[] { firstIndex, lastIndex };
+    }
+}
