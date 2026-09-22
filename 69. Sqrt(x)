@@ -1,0 +1,48 @@
+SOLUTION 1 :
+TC : O(n)
+SC : O(1)
+
+class Solution {
+    public int mySqrt(int x) {
+        int ans = 0;
+
+        for (int i = 1; i <= x; i++) {
+            long val = (long) i * i;
+
+            if (val > x) {
+                break;
+            }
+
+            ans = i;
+        }
+
+        return ans;
+    }
+}
+
+SOLUTION 2 :
+TC : O(log n)
+SC : O(1)
+
+class Solution {
+    public int mySqrt(int x) {
+        int low = 1;
+        int high = x;
+        int ans = 0;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            long val = (long) mid * mid;
+
+            if (val > x) {
+                high = mid - 1;
+            } else {
+                ans = mid;
+                low = mid + 1;
+            }
+        }
+
+        return ans;
+    }
+}
