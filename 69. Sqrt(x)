@@ -20,7 +20,7 @@ class Solution {
     }
 }
 
-SOLUTION 2 :
+SOLUTION 2: binary 1
 TC : O(log n)
 SC : O(1)
 
@@ -44,5 +44,40 @@ class Solution {
         }
 
         return ans;
+    }
+}
+
+
+SOLUTION 2: binary 2 
+TC : O(log n)
+SC : O(1)
+
+class Solution {
+    public int mySqrt(int x) {
+        int ans = 0;
+        int low = 1,
+                high = x;
+
+        if (x == 0) {
+            return 0;
+        }
+
+        if (x == 1) {
+            return 1;
+        }
+
+        while (low < high) {
+            int mid = low + (high - low) / 2;
+
+            long val = (long) mid * mid;
+
+            if (val > x) {
+                high = mid;
+            } else {
+                low = mid + 1;
+            }
+        }
+
+        return low - 1;
     }
 }
