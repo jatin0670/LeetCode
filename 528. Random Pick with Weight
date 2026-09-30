@@ -1,0 +1,77 @@
+SOLUTION 1:
+TC : O(m.n)
+SC : O(1)
+
+class Solution {
+
+    int[] pSum;
+    public Solution(int[] w) {
+        pSum  = new int[w.length];
+
+        pSum[0] = w[0];
+
+        for(int i = 1; i<w.length; i++){
+            pSum[i] = pSum[i-1] + w[i];
+        }
+    }
+    
+    public int pickIndex() {
+        double random = Math.random();
+
+        double target = random * pSum[pSum.length -1];
+
+        for(int i = 0; i<pSum.length; i++){
+            if(target <= pSum[i]){
+                return i;
+            }
+        }
+
+        return 0;
+    }
+}
+
+
+SOLUTION 2: 
+TC : 
+SC : O(n)
+
+class Solution {
+
+    int[] pSum;
+
+    public Solution(int[] w) {
+        pSum = new int[w.length];
+
+        pSum[0] = w[0];
+
+        for (int i = 1; i < w.length; i++) {
+            pSum[i] = pSum[i - 1] + w[i];
+        }
+    }
+
+    public int binary() {
+        int low = 0,
+                high = pSum.length - 1;
+
+        double random = Math.random();
+
+        double target = random * pSum[pSum.length - 1];
+
+        while (low < high) {
+
+            int mid = low + (high - low) / 2;
+
+            if (target <= pSum[mid]) {
+                high = mid;
+            } else {
+                low = mid + 1;
+            }
+        }
+
+        return low;
+    }
+
+    public int pickIndex() {
+        return binary();
+    }
+}
